@@ -132,8 +132,24 @@ void ofApp::clearObjects() {
 
 void ofApp::windowResized(int w, int h) {
 	printf("%d %d\n", w, h);
+
+	if (isFullScreen == FALSE) {
+		if (w != 1280 || h != 720) {
+			printf("Return 111\n");
+			return;
+		}
+	}
+	else if (isFullScreen == TRUE) {
+		if (w != 2560 || h != 1440) {
+			printf("Return 222\n"); 
+			return;
+		}
+	}
+	else {
+		return;
+	}
+
 	webcam_feed.close();
-	// ofSleepMillis(500);
 	webcam_feed.setup(w, h);
 
 	color_frame.allocate(webcam_feed.getWidth(), webcam_feed.getHeight());
@@ -142,4 +158,7 @@ void ofApp::windowResized(int w, int h) {
 	abs_difference.allocate(webcam_feed.getWidth(), webcam_feed.getHeight());
 
 	box2d.createBounds(0, 0, webcam_feed.getWidth(), webcam_feed.getHeight() - 50);
+	ofSetBackgroundAuto(TRUE);
+
+
 }
